@@ -11,8 +11,9 @@ module.exports = {
      * Listar usuarios
      */
     async index(req, res) {
-        const users = await User.findAll();
         const sync = await database.sync(); // tenta confirmar se isso aq precisa mesmo
+        
+        const users = await User.findAll();
 
         if (!users) {
             return res.json({ msg: "Nenhum registro encontrado" });
@@ -26,6 +27,8 @@ module.exports = {
      * Cadastrar usuarios
      */
     async post(req, res) {
+        const sync = await database.sync();
+
         const { name, mail, password } = req.body;
 
         if (await User.findOne({ where: { mail: mail } })) {
@@ -37,14 +40,12 @@ module.exports = {
         const hashPassword = await bcrypt.hash(password, 9);
 
         try {
-            const sync = await database.sync();
 
             const user = await User.create({
                 name: name,
                 mail: mail,
                 password: hashPassword,
             });
-
 
             const token = helpersAuth.createToken(user.id);
 
@@ -58,6 +59,8 @@ module.exports = {
      * Faz a autenticação do usuario gerando o token do JWT
      */
     async auth(req, res) {
+        const sync = await database.sync();
+
         const { mail, password } = req.body;
         const user = await User.findOne({ where: { mail: mail } });
 

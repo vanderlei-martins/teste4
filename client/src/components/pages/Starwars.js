@@ -5,16 +5,18 @@ function Starwars() {
     const [characters, setCharacters] = useState([]);
     const [page, setPage] = useState(1);
 
+    // temporario
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQzNTgzMjA2LCJleHAiOjE2NDM2NDMyMDZ9.C3IQlB8jsLe1b2oln2jl2vcMIK9S8pezz6qsoupi3Uk';
+
     useEffect(() => {
         let callApi = async () => {
-            const response = await axios.get("/starwars/index", 
-                {params: {page}},
-                // enviar o token jwt para autenticar na pagina
-            );
+            const response = await axios.get("/starwars/index", {
+                params: { page },
+                headers: { Authorization: `Bearer ${token}` },
+            });
             setCharacters(response.data.data);
         };
-
-        console.log(page);
+        
         callApi();
     }, [page]);
 

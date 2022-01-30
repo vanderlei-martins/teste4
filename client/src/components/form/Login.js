@@ -11,26 +11,26 @@ function Login() {
     const [jwttoken, setJwttoken] = useState("");
 
     function onSubmit(ev) {
-      ev.preventDefault();
-      console.log(login);
-      console.log(pass);
+        ev.preventDefault();
+        console.log(login);
+        console.log(pass);
 
-      axios
-        .post("/users/auth", {
-          mail: login,
-          password: pass,
-        })
-        .then((response) => {
-          const token = response.data.token;
-          if (!token) {
-            // pegar do response o status code e msg
-            alert("Login inválido");
-          }
-          console.log(token);
-        })
-        .catch((response) => {
-          alert("Login inválido");
-        });
+        axios
+            .post("/users/auth", {
+                mail: login,
+                password: pass,
+            })
+            .then((response) => {
+                const token = response.data.token;
+                if (!token) {
+                    // pegar do response o status code e msg
+                    alert("Login inválido");
+                }
+                console.log(token);
+            })
+            .catch((response) => {
+                alert("Login inválido");
+            });
     }
 
     return (
