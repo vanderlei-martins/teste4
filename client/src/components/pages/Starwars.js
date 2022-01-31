@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import { useLocation } from "react-router-dom";
 
 function Starwars() {
     const [characters, setCharacters] = useState([]);
     const [page, setPage] = useState(1);
+    const location = useLocation();
+    const {token} = location.state;
 
     // temporario
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQzNTgzMjA2LCJleHAiOjE2NDM2NDMyMDZ9.C3IQlB8jsLe1b2oln2jl2vcMIK9S8pezz6qsoupi3Uk';
+    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQzNTgzMjA2LCJleHAiOjE2NDM2NDMyMDZ9.C3IQlB8jsLe1b2oln2jl2vcMIK9S8pezz6qsoupi3Uk';
 
     useEffect(() => {
         let callApi = async () => {
@@ -24,8 +27,8 @@ function Starwars() {
         // criar layout com cards pra ficar legalzin
         <div className="App">
             <p>Pagina: {page}</p>
+            {console.log(location.state)}
             {characters.map((character) => {
-                console.log(character);
                 return (
                     <>
                         <p>Nome: {character.name}</p>
